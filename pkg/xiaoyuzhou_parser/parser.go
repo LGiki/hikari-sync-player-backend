@@ -4,8 +4,8 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
-	"hikari_listen/entity"
-	"hikari_listen/pkg/request"
+	"hikari_sync_player/entity"
+	"hikari_sync_player/pkg/request"
 	"io/ioutil"
 	"regexp"
 )

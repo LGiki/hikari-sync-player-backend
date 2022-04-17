@@ -2,9 +2,9 @@ package routers
 
 import (
 	"github.com/gin-gonic/gin"
-	"hikari_listen/middleware/cors"
-	"hikari_listen/pkg/ws"
-	v1 "hikari_listen/routers/api/v1"
+	"hikari_sync_player/middleware/cors"
+	"hikari_sync_player/pkg/ws"
+	v1 "hikari_sync_player/routers/api/v1"
 )
 
 func SetupRouter() *gin.Engine {

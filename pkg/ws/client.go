@@ -3,7 +3,7 @@ package ws
 import (
 	"encoding/json"
 	"github.com/gorilla/websocket"
-	"hikari_listen/pkg/logging"
+	"hikari_sync_player/pkg/logging"
 	"time"
 )
 

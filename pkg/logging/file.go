@@ -2,8 +2,8 @@ package logging
 
 import (
 	"fmt"
-	"hikari_listen/pkg/file"
-	"hikari_listen/pkg/setting"
+	"hikari_sync_player/pkg/file"
+	"hikari_sync_player/pkg/setting"
 	"os"
 	"time"
 )

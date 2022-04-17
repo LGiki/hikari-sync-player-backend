@@ -1,10 +1,10 @@
 package main
 
 import (
-	"hikari_listen/pkg/logging"
-	"hikari_listen/pkg/setting"
-	"hikari_listen/pkg/ws"
-	"hikari_listen/routers"
+	"hikari_sync_player/pkg/logging"
+	"hikari_sync_player/pkg/setting"
+	"hikari_sync_player/pkg/ws"
+	"hikari_sync_player/routers"
 	"log"
 	"net/http"
 	"time"

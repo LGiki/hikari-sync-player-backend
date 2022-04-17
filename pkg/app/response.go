@@ -2,7 +2,7 @@ package app
 
 import (
 	"github.com/gin-gonic/gin"
-	"hikari_listen/pkg/e"
+	"hikari_sync_player/pkg/e"
 )
 
 type Gin struct {

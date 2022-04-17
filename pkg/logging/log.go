@@ -2,7 +2,7 @@ package logging
 
 import (
 	"fmt"
-	"hikari_listen/pkg/file"
+	"hikari_sync_player/pkg/file"
 	"log"
 	"os"
 	"path/filepath"

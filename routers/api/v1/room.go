@@ -3,11 +3,11 @@ package v1
 import (
 	"github.com/gin-gonic/gin"
 	"github.com/gorilla/websocket"
-	"hikari_listen/pkg/app"
-	"hikari_listen/pkg/e"
-	"hikari_listen/pkg/logging"
-	"hikari_listen/pkg/ws"
-	"hikari_listen/pkg/xiaoyuzhou_parser"
+	"hikari_sync_player/pkg/app"
+	"hikari_sync_player/pkg/e"
+	"hikari_sync_player/pkg/logging"
+	"hikari_sync_player/pkg/ws"
+	"hikari_sync_player/pkg/xiaoyuzhou_parser"
 	"net/http"
 	"strings"
 )
