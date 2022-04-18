@@ -36,6 +36,7 @@ type CreateRoomRequestBody struct {
 }
 
 type CreateRoomResponseBody struct {
+	Type   string `json:"type"`
 	RoomId string `json:"roomId"`
 }
 
@@ -71,6 +72,7 @@ func CreateRoom(context *gin.Context) {
 			return
 		}
 		createRoomResponseBody := CreateRoomResponseBody{
+			Type:   RoomTypePodcast,
 			RoomId: roomId,
 		}
 		appG.Response(http.StatusOK, e.SUCCESS, createRoomResponseBody)
@@ -95,6 +97,7 @@ func CreateRoom(context *gin.Context) {
 			return
 		}
 		createRoomResponseBody := CreateRoomResponseBody{
+			Type:   RoomTypeVideo,
 			RoomId: roomId,
 		}
 		appG.Response(http.StatusOK, e.SUCCESS, createRoomResponseBody)
