@@ -11,8 +11,17 @@ type App struct {
 	TimeFormat      string
 }
 
+type Redis struct {
+	Host        string
+	Password    string
+	MaxIdle     int
+	MaxActive   int
+	IdleTimeout int
+}
+
 type Settings struct {
-	App App
+	App   App
+	Redis Redis
 }
 
 var GlobalSettings = &Settings{}

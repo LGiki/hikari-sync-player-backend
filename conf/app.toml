@@ -9,3 +9,10 @@ LogSavePath = "logs/"
 LogSaveName = "log"
 LogFileExt = "log"
 TimeFormat = "20060102"
+
+[Redis]
+Host = "127.0.0.1:6379"
+Password = ""
+MaxIdle = 30
+MaxActive = 30
+IdleTimeout = 200
