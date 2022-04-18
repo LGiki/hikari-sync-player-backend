@@ -25,8 +25,8 @@ var webSocketUpgrader = websocket.Upgrader{
 }
 
 const (
-	RoomTypePodcast = "podcast"
-	RoomTypeVideo   = "video"
+	RoomTypeAudio = "audio"
+	RoomTypeVideo = "video"
 )
 
 const RedisExpireTime = 24 * 60 * 60
@@ -63,7 +63,7 @@ func CreateRoom(context *gin.Context) {
 		}
 		roomId := util.GenerateUUID()
 		roomDetail := &RoomDetail{
-			Type:      RoomTypePodcast,
+			Type:      RoomTypeAudio,
 			MediaData: episode,
 		}
 		err = gredis.Set(roomId, roomDetail, RedisExpireTime)
@@ -72,7 +72,7 @@ func CreateRoom(context *gin.Context) {
 			return
 		}
 		createRoomResponseBody := CreateRoomResponseBody{
-			Type:   RoomTypePodcast,
+			Type:   RoomTypeAudio,
 			RoomId: roomId,
 		}
 		appG.Response(http.StatusOK, e.SUCCESS, createRoomResponseBody)
