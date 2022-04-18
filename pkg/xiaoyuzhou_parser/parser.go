@@ -33,7 +33,7 @@ type podcastShow struct {
 	URL             string          `json:"url"`
 }
 
-func parseEpisodeFromHtml(html string) (*entity.Episode, error) {
+func parseEpisodeFromHtml(html string) (*entity.PodcastEpisode, error) {
 	podcastShowPattern := regexp.MustCompile(`(?m)<script name="schema:podcast-show" type="application/ld\+json">(?P<json>.*?)</script>`)
 	coverImagePattern := regexp.MustCompile(`(?m)<meta property="og:image" content="(?P<url>.*?)"\/>`)
 	themeColorPattern := regexp.MustCompile(`(?m)--theme-color: hsl\((?P<hsl>.*?)\);`)
@@ -47,7 +47,7 @@ func parseEpisodeFromHtml(html string) (*entity.Episode, error) {
 	if err != nil {
 		return nil, errors.New("fail to parse xiaoyuzhou episode json")
 	}
-	episode := &entity.Episode{
+	episode := &entity.PodcastEpisode{
 		Title:        podcastShow.Name,
 		PodcastName:  podcastShow.PartOfSeries.Name,
 		EnclosureUrl: podcastShow.AssociatedMedia.ContentURL,
@@ -66,7 +66,7 @@ func parseEpisodeFromHtml(html string) (*entity.Episode, error) {
 	return episode, nil
 }
 
-func ParseEpisode(url string) (*entity.Episode, error) {
+func ParseEpisode(url string) (*entity.PodcastEpisode, error) {
 	response, err := request.Get(url)
 	if err != nil {
 		return nil, err
