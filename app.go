@@ -1,6 +1,8 @@
 package main
 
 import (
+	"fmt"
+	"hikari_sync_player/pkg/gredis"
 	"hikari_sync_player/pkg/logging"
 	"hikari_sync_player/pkg/setting"
 	"hikari_sync_player/pkg/ws"
@@ -18,6 +20,10 @@ func init() {
 	err = logging.Setup()
 	if err != nil {
 		log.Fatalf("init logging err: %v", err)
+	}
+	err = gredis.Setup()
+	if err != nil {
+		logging.Fatal(fmt.Sprintf("init redis err: %v", err))
 	}
 }
 
