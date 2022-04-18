@@ -17,7 +17,8 @@ func SetupRouter() *gin.Engine {
 	apiV1 := router.Group("/api/v1")
 	{
 		apiV1.POST("/room", v1.CreateRoom)
-		apiV1.GET("/room/:id", func(context *gin.Context) {
+		apiV1.GET("/room/:roomId", v1.GetRoomDetail)
+		apiV1.GET("/room/ws/:roomId", func(context *gin.Context) {
 			v1.RoomSync(context, hub)
 		})
 	}
