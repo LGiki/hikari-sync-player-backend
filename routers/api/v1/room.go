@@ -55,7 +55,7 @@ func CreateRoom(context *gin.Context) {
 	}
 
 	// parse xiaoyuzhou episode link
-	if strings.Contains(createRoomRequestBody.Url, "xiaoyuzhoufm.com") {
+	if strings.Contains(createRoomRequestBody.Url, "xiaoyuzhoufm.com/episode") {
 		episode, err := xiaoyuzhou_parser.ParseEpisode(createRoomRequestBody.Url)
 		if err != nil {
 			appG.Response(http.StatusInternalServerError, e.FailToParseXiaoYuZhouEpisode, nil)
@@ -80,7 +80,7 @@ func CreateRoom(context *gin.Context) {
 	}
 
 	// parse cow transfer share link
-	if strings.Contains(createRoomRequestBody.Url, "cowtransfer.com") {
+	if strings.Contains(createRoomRequestBody.Url, "cowtransfer.com/s") {
 		video, err := cowtransfer_parser.ParseShareLink(createRoomRequestBody.Url)
 		if err != nil {
 			appG.Response(http.StatusInternalServerError, e.FailToParseCowTransferShareLink, nil)
