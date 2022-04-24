@@ -9,5 +9,5 @@ type PodcastEpisode struct {
 }
 
 type Video struct {
-	Url string `json:"title"`
+	Url string `json:"url"`
 }
