@@ -1,7 +1,6 @@
 package ws
 
 import (
-	"encoding/json"
 	"github.com/gorilla/websocket"
 	"hikari_sync_player/pkg/logging"
 	"time"
@@ -34,7 +33,6 @@ func (c *Client) ReadLoop() {
 		c.conn.SetReadDeadline(time.Now().Add(pongWait))
 		return nil
 	})
-	websocketJsonMessage := WebsocketJsonMessage{}
 	for {
 		_, rawMessage, err := c.conn.ReadMessage()
 		if err != nil {
@@ -43,15 +41,9 @@ func (c *Client) ReadLoop() {
 			}
 			break
 		}
-		err = json.Unmarshal(rawMessage, &websocketJsonMessage)
-		if err != nil {
-			logging.Error(err)
-			break
-		}
-
 		websocketBroadCastMessage := WebsocketBroadcastMessage{
 			RoomId: c.RoomId,
-			Data:   []byte("123"),
+			Data:   rawMessage,
 		}
 		c.hub.Broadcast <- websocketBroadCastMessage
 	}
