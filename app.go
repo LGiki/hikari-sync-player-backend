@@ -31,8 +31,9 @@ func main() {
 	hub := ws.NewHub()
 	go hub.Run()
 	router := routers.SetupRouter()
+	addr := fmt.Sprintf("%s:%d", setting.GlobalSettings.App.Host, setting.GlobalSettings.App.Port)
 	server := &http.Server{
-		Addr:           "0.0.0.0:12312",
+		Addr:           addr,
 		Handler:        router,
 		ReadTimeout:    60 * time.Second,
 		WriteTimeout:   60 * time.Second,

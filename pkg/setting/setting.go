@@ -4,6 +4,8 @@ import "github.com/BurntSushi/toml"
 
 type App struct {
 	UserAgent       string
+	Host            string
+	Port            int
 	RuntimeRootPath string
 	LogSavePath     string
 	LogSaveName     string
