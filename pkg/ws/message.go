@@ -1,12 +1,9 @@
 package ws
 
-const (
-	MessageEventLatestTime = "latestTime"
-)
-
 type WebsocketJsonMessage struct {
-	Event string      `json:"type"`
-	Data  interface{} `json:"data"`
+	Event  string      `json:"event"`
+	UserId string      `json:"userId"`
+	Data   interface{} `json:"data"`
 }
 
 type WebsocketBroadcastMessage struct {
