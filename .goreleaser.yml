@@ -1,0 +1,28 @@
+project_name: hikari_sync_player
+
+env:
+  - CGO_ENABLED=0
+
+builds:
+  - main: ./
+    binary: hikari_sync_player
+    goos:
+      - windows
+      - darwin
+      - linux
+      - freebsd
+    goarch:
+      - amd64
+      - arm
+      - arm64
+    flags:
+      - -trimpath
+
+checksum:
+  name_template: 'checksums.txt'
+
+snapshot:
+  name_template: "{{ incpatch .Tag }}"
+
+changelog:
+  sort: asc
