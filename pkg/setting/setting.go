@@ -27,7 +27,26 @@ type Settings struct {
 	Redis Redis
 }
 
-var GlobalSettings = &Settings{}
+var GlobalSettings = &Settings{
+	App: App{
+		UserAgent:       "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/100.0.4896.88 Safari/537.36",
+		Host:            "0.0.0.0",
+		Port:            12321,
+		RunningMode:     "release",
+		RuntimeRootPath: "runtime/",
+		LogSavePath:     "logs/",
+		LogSaveName:     "log",
+		LogFileExt:      "log",
+		TimeFormat:      "20060102",
+	},
+	Redis: Redis{
+		Host:        "127.0.0.1:6379",
+		Password:    "",
+		MaxIdle:     30,
+		MaxActive:   30,
+		IdleTimeout: 200,
+	},
+}
 
 func Setup() error {
 	// load configs from toml file
