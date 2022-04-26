@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"github.com/gin-gonic/gin"
 	"hikari_sync_player/pkg/gredis"
 	"hikari_sync_player/pkg/logging"
 	"hikari_sync_player/pkg/setting"
@@ -30,6 +31,7 @@ func init() {
 func main() {
 	hub := ws.NewHub()
 	go hub.Run()
+	gin.SetMode(setting.GlobalSettings.App.RunningMode)
 	router := routers.SetupRouter()
 	addr := fmt.Sprintf("%s:%d", setting.GlobalSettings.App.Host, setting.GlobalSettings.App.Port)
 	server := &http.Server{

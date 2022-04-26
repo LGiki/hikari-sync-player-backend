@@ -6,6 +6,7 @@ type App struct {
 	UserAgent       string
 	Host            string
 	Port            int
+	RunningMode     string
 	RuntimeRootPath string
 	LogSavePath     string
 	LogSaveName     string
