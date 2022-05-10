@@ -1,6 +1,7 @@
 package ws
 
 import (
+	"encoding/json"
 	"github.com/gorilla/websocket"
 	"hikari_sync_player/pkg/logging"
 	"time"
@@ -33,6 +34,7 @@ func (c *Client) ReadLoop() {
 		c.conn.SetReadDeadline(time.Now().Add(pongWait))
 		return nil
 	})
+	websocketJsonMessage := WebsocketJsonMessage{}
 	for {
 		_, rawMessage, err := c.conn.ReadMessage()
 		if err != nil {
@@ -41,11 +43,66 @@ func (c *Client) ReadLoop() {
 			}
 			break
 		}
-		websocketBroadCastMessage := WebsocketBroadcastMessage{
-			RoomId: c.RoomId,
-			Data:   rawMessage,
+
+		err = json.Unmarshal(rawMessage, &websocketJsonMessage)
+		if err != nil {
+			logging.Error(err)
+			continue
 		}
-		c.hub.Broadcast <- websocketBroadCastMessage
+		switch websocketJsonMessage.Event {
+		case "updatePlayState":
+			var newPlayState PlayState
+			err := json.Unmarshal(websocketJsonMessage.Data, &newPlayState)
+			if err != nil {
+				logging.Error("failed to parse updatePlayState command data")
+			} else {
+				previousPlayState := c.hub.RoomPlayState[c.RoomId]
+				if previousPlayState != nil {
+					// Store the newPlayState only when newPlayState.Timestamp is older than previousPlayState.Timestamp
+					if newPlayState.Timestamp > previousPlayState.Timestamp {
+						c.hub.RoomPlayState[c.RoomId] = &newPlayState
+					}
+				} else {
+					c.hub.RoomPlayState[c.RoomId] = &newPlayState
+				}
+			}
+			break
+		case "hello", "getPlayState":
+			playState := c.hub.RoomPlayState[c.RoomId]
+			playStateMessage := WebsocketJsonMessage{
+				Event:  "playState",
+				UserId: "",
+				Data:   nil,
+			}
+			if playState != nil {
+				// Update playTime at current timestamp
+				playState = playState.GetCurrentPlayState()
+				playStateBytes, err := json.Marshal(playState)
+				if err != nil {
+					logging.Error(err)
+					break
+				}
+				playStateMessage.Data = playStateBytes
+			}
+			if websocketJsonMessage.Event == "hello" {
+				playStateMessage.Event = "hello"
+			}
+			playStateMessageBytes, err := json.Marshal(playStateMessage)
+			if err != nil {
+				logging.Error(err)
+				break
+			}
+			// Only send the play state to the client
+			c.Send <- playStateMessageBytes
+			break
+		default:
+			websocketBroadCastMessage := WebsocketBroadcastMessage{
+				RoomId: c.RoomId,
+				Data:   rawMessage,
+			}
+			c.hub.Broadcast <- websocketBroadCastMessage
+			break
+		}
 	}
 }
 

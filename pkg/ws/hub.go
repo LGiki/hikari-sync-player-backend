@@ -12,18 +12,20 @@ const (
 )
 
 type Hub struct {
-	Clients    map[string]map[*Client]bool
-	Broadcast  chan WebsocketBroadcastMessage
-	Register   chan *Client
-	Unregister chan *Client
+	RoomPlayState map[string]*PlayState
+	Clients       map[string]map[*Client]bool
+	Broadcast     chan WebsocketBroadcastMessage
+	Register      chan *Client
+	Unregister    chan *Client
 }
 
 func NewHub() *Hub {
 	return &Hub{
-		Broadcast:  make(chan WebsocketBroadcastMessage),
-		Register:   make(chan *Client),
-		Unregister: make(chan *Client),
-		Clients:    make(map[string]map[*Client]bool),
+		RoomPlayState: make(map[string]*PlayState),
+		Broadcast:     make(chan WebsocketBroadcastMessage),
+		Register:      make(chan *Client),
+		Unregister:    make(chan *Client),
+		Clients:       make(map[string]map[*Client]bool),
 	}
 }
 
@@ -47,6 +49,7 @@ func (h *Hub) Run() {
 				close(client.Send)
 				if len(h.Clients[client.RoomId]) == 0 {
 					delete(h.Clients, client.RoomId)
+					delete(h.RoomPlayState, client.RoomId)
 				}
 			}
 		case message := <-h.Broadcast:
@@ -58,6 +61,7 @@ func (h *Hub) Run() {
 					delete(h.Clients[client.RoomId], client)
 					if len(h.Clients[client.RoomId]) == 0 {
 						delete(h.Clients, client.RoomId)
+						delete(h.RoomPlayState, client.RoomId)
 					}
 				}
 			}
