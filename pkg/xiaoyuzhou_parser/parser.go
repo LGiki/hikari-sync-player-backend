@@ -36,7 +36,7 @@ type podcastShow struct {
 func parseEpisodeFromHtml(html string) (*entity.PodcastEpisode, error) {
 	podcastShowPattern := regexp.MustCompile(`(?m)<script name="schema:podcast-show" type="application/ld\+json">(?P<json>.*?)</script>`)
 	coverImagePattern := regexp.MustCompile(`(?m)<meta property="og:image" content="(?P<url>.*?)"\/>`)
-	themeColorPattern := regexp.MustCompile(`(?m)--theme-color: hsl\((?P<hsl>.*?)\);`)
+	themeColorPattern := regexp.MustCompile(`(?m)--theme-color:\s*hsl\((?P<hsl>.*?)\);`)
 	podcastShowMatchResult := podcastShowPattern.FindStringSubmatch(html)
 
 	if len(podcastShowMatchResult) == 0 {
